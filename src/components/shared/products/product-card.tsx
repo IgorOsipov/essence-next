@@ -27,9 +27,9 @@ export default function ProductCard({ product }: { product: Product }) {
         />
       </CardContent>
       <CardFooter>
-        <Button className="w-full">
-          <Link href={`/products/${product.id}`}>Open</Link>
-        </Button>
+        <Link className="w-full" href={`/products/product/${product.id}`}>
+          <Button className="w-full">Open</Button>
+        </Link>
       </CardFooter>
     </Card>
   );
