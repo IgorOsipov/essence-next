@@ -43,35 +43,21 @@ export default async function Product({ params }: { params: { id: string } }) {
         </BreadcrumbList>
       </Breadcrumb>
       <div className="flex gap-x-4">
-        <Carousel className="mx-12 w-1/2">
+        <Carousel className={cn('w-1/2', product.images.length > 1 && 'mx-12')}>
           <CarouselContent>
-            <CarouselItem>
-              <Image
-                src={product.images[0]}
-                alt={product.title}
-                width={1000}
-                height={1000}
-              ></Image>
-            </CarouselItem>
-            <CarouselItem>
-              <Image
-                src={product.images[0]}
-                alt={product.title}
-                width={1000}
-                height={1000}
-              ></Image>
-            </CarouselItem>
-            <CarouselItem>
-              <Image
-                src={product.images[0]}
-                alt={product.title}
-                width={1000}
-                height={1000}
-              ></Image>
-            </CarouselItem>
+            {product.images.map((image) => (
+              <CarouselItem key={image}>
+                <Image
+                  src={image}
+                  alt={product.title}
+                  width={1000}
+                  height={1000}
+                ></Image>
+              </CarouselItem>
+            ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          {product.images.length > 1 && <CarouselPrevious />}
+          {product.images.length > 1 && <CarouselNext />}
         </Carousel>
         <div className="flex-grow">
           <h1 className="font-bold text-xl">{product.title}</h1>

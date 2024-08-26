@@ -6,7 +6,8 @@ export async function useProducts(
   const limit = 12;
   const currentPage = parseInt(page);
   const response = await fetch(
-    `https://dummyjson.com/products?limit=${limit}&skip=${limit * (currentPage - 1)}`
+    `https://dummyjson.com/products?limit=${limit}&skip=${limit * (currentPage - 1)}`,
+    { cache: 'force-cache' }
   );
   const { products, total } = (await response.json()) as ProductsApi;
 
