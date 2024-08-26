@@ -46,7 +46,7 @@ export default function PaginationComponent({ totalPages, page }: { totalPages: 
               <PaginationEllipsis />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="/products/1"> {totalPages} </PaginationLink>
+              <PaginationLink href={`/products/${totalPages}`}> {totalPages} </PaginationLink>
             </PaginationItem>
           </>
         )}
