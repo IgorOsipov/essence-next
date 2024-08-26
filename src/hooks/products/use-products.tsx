@@ -6,5 +6,5 @@ export async function useProducts(page: string): Promise<{ products: Product[]; 
   const response = await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${limit * (currentPage - 1)}`);
   const { products, total } = (await response.json()) as ProductsApi;
 
-  return { products, totalPages: Math.floor(total / limit) };
+  return { products, totalPages: Math.ceil(total / limit) };
 }

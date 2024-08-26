@@ -1,6 +1,7 @@
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -8,7 +9,13 @@ import {
 } from '@/components/ui/pagination';
 
 export default function PaginationComponent({ totalPages, page }: { totalPages: number; page: number }) {
-  return totalPages > 1 ? (
+  const showedPagesCount = 5; //The number here should be only odd and not less than 3.
+  const showedPages = Array.from(
+    { length: showedPagesCount },
+    (_, i) => page - Math.ceil(showedPagesCount / 2) + (i + 1),
+  ).filter(p => p >= 1 && p <= totalPages);
+
+  return totalPages > 0 ? (
     <Pagination>
       <PaginationContent>
         {page > 1 && (
@@ -16,14 +23,33 @@ export default function PaginationComponent({ totalPages, page }: { totalPages: 
             <PaginationPrevious href={`/products/${page - 1}`} />
           </PaginationItem>
         )}
-        {Array.from({ length: totalPages }, (_, i) => (
-          <PaginationItem key={i}>
-            <PaginationLink isActive={page === i + 1} href={`/products/${i + 1}`}>
-              {i + 1}
+        {page > Math.ceil(showedPagesCount / 2) && (
+          <>
+            <PaginationItem>
+              <PaginationLink href="/products/1"> 1 </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          </>
+        )}
+        {showedPages.map(p => (
+          <PaginationItem key={p}>
+            <PaginationLink isActive={page === p} href={`/products/${p}`}>
+              {p}
             </PaginationLink>
           </PaginationItem>
         ))}
-
+        {page <= totalPages - Math.ceil(showedPagesCount / 2) && (
+          <>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="/products/1"> {totalPages} </PaginationLink>
+            </PaginationItem>
+          </>
+        )}
         {page < totalPages && (
           <PaginationItem>
             <PaginationNext href={`/products/${page + 1}`} />
