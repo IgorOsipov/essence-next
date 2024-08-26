@@ -20,10 +20,14 @@ export default function Nav(props: NavigationMenuProps) {
     <NavigationMenu {...props}>
       <NavigationMenuList>
         <NavigationMenuItem>
-          {pages.map(p => (
+          {pages.map((p) => (
             <Link key={p.name} href={p.path} legacyBehavior passHref>
               <NavigationMenuLink
-                data-active={p.path.split('/')[1] === pathname.split('/')[1] ? true : undefined}
+                data-active={
+                  p.path.split('/')[1] === pathname.split('/')[1]
+                    ? true
+                    : undefined
+                }
                 className={navigationMenuTriggerStyle()}
               >
                 {p.name}

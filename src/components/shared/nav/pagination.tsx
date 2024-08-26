@@ -8,12 +8,18 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 
-export default function PaginationComponent({ totalPages, page }: { totalPages: number; page: number }) {
+export default function PaginationComponent({
+  totalPages,
+  page,
+}: {
+  totalPages: number;
+  page: number;
+}) {
   const showedPagesCount = 5; //The number here should be only odd and not less than 3.
   const showedPages = Array.from(
     { length: showedPagesCount },
-    (_, i) => page - Math.ceil(showedPagesCount / 2) + (i + 1),
-  ).filter(p => p >= 1 && p <= totalPages);
+    (_, i) => page - Math.ceil(showedPagesCount / 2) + (i + 1)
+  ).filter((p) => p >= 1 && p <= totalPages);
 
   return totalPages > 0 ? (
     <Pagination>
@@ -33,7 +39,7 @@ export default function PaginationComponent({ totalPages, page }: { totalPages: 
             </PaginationItem>
           </>
         )}
-        {showedPages.map(p => (
+        {showedPages.map((p) => (
           <PaginationItem key={p}>
             <PaginationLink isActive={page === p} href={`/products/${p}`}>
               {p}
@@ -46,7 +52,10 @@ export default function PaginationComponent({ totalPages, page }: { totalPages: 
               <PaginationEllipsis />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href={`/products/${totalPages}`}> {totalPages} </PaginationLink>
+              <PaginationLink href={`/products/${totalPages}`}>
+                {' '}
+                {totalPages}{' '}
+              </PaginationLink>
             </PaginationItem>
           </>
         )}
