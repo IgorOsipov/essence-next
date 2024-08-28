@@ -17,9 +17,15 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
+import { getBlurData } from '@/utils/blur-data-generator';
 
 export default async function Product({ params }: { params: { id: string } }) {
   const product = await useProduct(params.id);
+
+  const blurs: string[] = [];
+  for (const i of product.images) {
+    blurs.push(await getBlurData(i).then((bd) => bd.base64));
+  }
 
   return (
     <>
@@ -43,16 +49,23 @@ export default async function Product({ params }: { params: { id: string } }) {
         </BreadcrumbList>
       </Breadcrumb>
       <div className="flex gap-x-4">
-        <Carousel className={cn('w-1/2', product.images.length > 1 && 'mx-12')}>
+        <Carousel
+          className={cn(
+            'w-[600px] h-[600px]',
+            product.images.length > 1 && 'mx-12'
+          )}
+        >
           <CarouselContent>
-            {product.images.map((image) => (
-              <CarouselItem key={image}>
+            {product.images.map((image, index) => (
+              <CarouselItem key={image} className="">
                 <Image
                   src={image}
                   alt={product.title}
-                  width={1000}
-                  height={1000}
-                ></Image>
+                  width={600}
+                  height={600}
+                  placeholder="blur"
+                  blurDataURL={blurs[index]}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
