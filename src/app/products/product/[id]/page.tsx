@@ -17,15 +17,11 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
-import { getBlurData } from '@/utils/blur-data-generator';
+import React from 'react';
+import ProductCarousel from '@/components/shared/products/product-carousel';
 
-export default async function Product({ params }: { params: { id: string } }) {
+const Product: React.FC<{ params: { id: string } }> = async ({ params }) => {
   const product = await useProduct(params.id);
-
-  const blurs: string[] = [];
-  for (const i of product.images) {
-    blurs.push(await getBlurData(i).then((bd) => bd.base64));
-  }
 
   return (
     <>
@@ -49,29 +45,7 @@ export default async function Product({ params }: { params: { id: string } }) {
         </BreadcrumbList>
       </Breadcrumb>
       <div className="flex gap-x-4">
-        <Carousel
-          className={cn(
-            'w-[600px] h-[600px]',
-            product.images.length > 1 && 'mx-12'
-          )}
-        >
-          <CarouselContent>
-            {product.images.map((image, index) => (
-              <CarouselItem key={image} className="">
-                <Image
-                  src={image}
-                  alt={product.title}
-                  width={600}
-                  height={600}
-                  placeholder="blur"
-                  blurDataURL={blurs[index]}
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          {product.images.length > 1 && <CarouselPrevious />}
-          {product.images.length > 1 && <CarouselNext />}
-        </Carousel>
+        <ProductCarousel images={product.images} alt={product.title} />
         <div className="flex-grow">
           <h1 className="font-bold text-xl">{product.title}</h1>
           <h2 className="font-bold text-xl">
@@ -94,4 +68,6 @@ export default async function Product({ params }: { params: { id: string } }) {
       </div>
     </>
   );
-}
+};
+
+export default Product;
