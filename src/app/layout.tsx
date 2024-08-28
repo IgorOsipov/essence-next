@@ -29,7 +29,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Nav className="w-full my-4" />
+        <Nav className="w-full py-4" />
         <div className="container">{children}</div>
       </body>
     </html>
